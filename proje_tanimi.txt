@@ -1,0 +1,7 @@
+//Proje Tanımı
+Ürün (Kategorik olarak ürünler gruplandırılacak) ve masa bilgilerini barındıracak. 
+Masalarındoluluk boşluk durumlarını farklı renklerde gösteren bir uygulama olacak. 
+Her Adisyon (Oturum)için masalara ait ücret/tutar hesaplamasını yapacak. 
+Masaya yeni bir adisyon açıldığında dolu,adisyon kapandığında boş olarak gösterecek. 
+Günlük, aylık veya tarih bazında hasılat raporlarıolacak.
+//
