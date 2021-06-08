@@ -381,16 +381,16 @@ public class satis_panel extends javax.swing.JFrame {
             System.out.println("tutar:  " + tutar);
             i = i + 1;
         }
-        SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-mm-dd");//dd/MM/yyyy dd.MM.yyyy
+        SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd");//dd/MM/yyyy dd.MM.yyyy
         Date now = new Date();
         String strDate = sdfDate.format(now);
-        model3.addRow(new Object[]{siparisID, strDate, toplamtutar, secilenMasa});
+        model3.addRow(new Object[]{1, strDate, toplamtutar, secilenMasa});
         model2.setRowCount(0);
         tamamlananSiparisKaydi();
     }
 
     public static void tamamlananSiparisKaydi() throws SQLException {
-        SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-mm-dd");//dd/MM/yyyy dd.MM.yyyy
+        SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd");//dd/MM/yyyy dd.MM.yyyy
         Date now = new Date();
         String strDate = sdfDate.format(now);
         String query = "insert into dbo.siparisler (siparis_ID, Tarih, Toplam_fiyat, Masa) values('" + siparisID + "', '" + strDate + "', '" + toplamtutar + "', '" + secilenMasa + "')";
