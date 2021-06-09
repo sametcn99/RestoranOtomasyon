@@ -546,6 +546,7 @@ public class satis_panel extends javax.swing.JFrame {
             System.out.println(queryRezervasyon);
             ((Connection) con).createStatement().execute(queryRezervasyon);
             model.addRow(new Object[]{rezervasyonEkleAdSoyad.getText(), rezervasyonTarihi, secilenMasa});
+            rezervasyonEkleAdSoyad.setText("");
         } catch (SQLException ex) {
             Logger.getLogger(satis_panel.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -557,6 +558,7 @@ public class satis_panel extends javax.swing.JFrame {
             String query = "delete from dbo.rezervasyon where adSoyad='" + rezervasyonCikarAdSoyad.getText().trim() + "'";
             ((Connection) con).createStatement().execute(query);
             model.setRowCount(0);
+            rezervasyonCikarAdSoyad.setText("");
             rezervasyonGoster();
         } catch (SQLException ex) {
             Logger.getLogger(satis_panel.class.getName()).log(Level.SEVERE, null, ex);
@@ -577,6 +579,7 @@ public class satis_panel extends javax.swing.JFrame {
             model.addRow(new Object[]{adSoyad, Tarih, Masa});
             i++;
         }
+        
     }
 
     void urunGoster() throws SQLException {

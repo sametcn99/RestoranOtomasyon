@@ -5,3 +5,10 @@ Her Adisyon (Oturum)için masalara ait ücret/tutar hesaplamasını yapacak.
 Masaya yeni bir adisyon açıldığında dolu,adisyon kapandığında boş olarak gösterecek. 
 Günlük, aylık veya tarih bazında hasılat raporlarıolacak.
 //
+Sunucu = localhost
+Port = 1433
+Database = gorsel3
+User = sa
+Password = 1
+//
+Proje Github Linki: github.com/sametcn99/RestoranOtomasyon
