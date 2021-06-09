@@ -47,6 +47,7 @@ public class admin_panel extends javax.swing.JFrame {
     static String ufiyati = "";
     static int toplamTutar = 0;
     static String tutar = "";
+
     /*static int toplamTutar = 0;
     static int tutar = 0;*/
 
@@ -953,11 +954,11 @@ public class admin_panel extends javax.swing.JFrame {
         System.out.println("toplam tutar hesapla: Toplam Tutar: " + toplamTutar + "toplam tutar2: " + String.valueOf(toplamTutar) + "satır sayısı " + satirSayisi);
         System.out.println("model get value: " + model.getValueAt(1, 2));
         for (int i = 0; i < satirSayisi; i++) {
-            tutar =  (String) model.getValueAt(i, 2);
+            tutar = (String) model.getValueAt(i, 2);
             toplamTutar = toplamTutar + Integer.parseInt(tutar);
         }
         toplamTutarGoster.setText(String.valueOf(toplamTutar));
-        
+
         System.out.println("toplam tutar hesapla: Toplam Tutar: " + toplamTutar + "toplam tutar2: " + String.valueOf(toplamTutar) + "satır sayısı " + satirSayisi);
     }
 

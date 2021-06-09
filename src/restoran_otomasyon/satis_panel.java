@@ -571,13 +571,11 @@ public class satis_panel extends javax.swing.JFrame {
         java.sql.Statement stmt = con.createStatement();
         ResultSet rs = stmt.executeQuery(query);
         model.setRowCount(0);
-        int i = 0;
         while (rs.next()) {
             String adSoyad = rs.getString("adSoyad");
             String Tarih = rs.getString("Tarih");
             String Masa = rs.getString("Masa");
             model.addRow(new Object[]{adSoyad, Tarih, Masa});
-            i++;
         }
     }
 
@@ -588,40 +586,35 @@ public class satis_panel extends javax.swing.JFrame {
         java.sql.Statement stmt = con.createStatement();
         DefaultTableModel model = (DefaultTableModel) display_urunler.getModel();
         ResultSet rs = stmt.executeQuery(QUERY);
-        int i = 0;
         while (rs.next()) {
             uid = rs.getString("urun_id");
             uadi = rs.getString("urun_adi");
             ufiyati = rs.getString("urun_fiyati");
             model.addRow(new Object[]{uid, uadi, ufiyati});
-            i++;
         }
     }
 
-
-        void siparisTamamla() throws SQLException {
-            DefaultTableModel model2 = (DefaultTableModel) eklenen_urunler.getModel();
-            DefaultTableModel model3 = (DefaultTableModel) jTable1.getModel();
-            DefaultComboBoxModel comboboxModel = (DefaultComboBoxModel) combobox.getModel();
-            siparisID = UUID.randomUUID().toString();
-            secilenMasa = (String) comboboxModel.getSelectedItem();
-            int rows = eklenen_urunler.getRowCount();
-            int i = 0;
-            while (i != rows) {
-                tutar = (String) model2.getValueAt(i, 2);
-                toplamtutar = Integer.parseInt(tutar) + toplamtutar;
-                System.out.println("tutar:  " + tutar);
-                i = i + 1;
-            }
-            SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd");//dd/MM/yyyy dd.MM.yyyy
-            Date now = new Date();
-            String strDate = sdfDate.format(now);
-            model3.addRow(new Object[]{siparisID, strDate, toplamtutar, secilenMasa});
-            model2.setRowCount(0);
-            tamamlananSiparisKaydi();
+    void siparisTamamla() throws SQLException {
+        DefaultTableModel model2 = (DefaultTableModel) eklenen_urunler.getModel();
+        DefaultTableModel model3 = (DefaultTableModel) jTable1.getModel();
+        DefaultComboBoxModel comboboxModel = (DefaultComboBoxModel) combobox.getModel();
+        siparisID = UUID.randomUUID().toString();
+        secilenMasa = (String) comboboxModel.getSelectedItem();
+        int rows = eklenen_urunler.getRowCount();
+        int i = 0;
+        while (i != rows) {
+            tutar = (String) model2.getValueAt(i, 2);
+            toplamtutar = Integer.parseInt(tutar) + toplamtutar;
+            System.out.println("tutar:  " + tutar);
+            i = i + 1;
         }
-
-    
+        SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd");//dd/MM/yyyy dd.MM.yyyy
+        Date now = new Date();
+        String strDate = sdfDate.format(now);
+        model3.addRow(new Object[]{siparisID, strDate, toplamtutar, secilenMasa});
+        model2.setRowCount(0);
+        tamamlananSiparisKaydi();
+    }
 
     public static void tamamlananSiparisKaydi() throws SQLException {
         SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd");//dd/MM/yyyy dd.MM.yyyy
