@@ -23,8 +23,6 @@ import javax.swing.UIManager;
 public class admin_giris extends javax.swing.JFrame {
 
     String butonKontrol = null;
-    String varsayılanKullaniciAdi = "root";
-    String varsayılanSifre = "root";
 
     public admin_giris() {
         initComponents();
@@ -54,8 +52,9 @@ public class admin_giris extends javax.swing.JFrame {
         //kullanıcı adı ve şifreyi textfield'lardan burada alındı.
         String admin_kullanici_adi = kullanici_adi_girilen.getText();
         String admin_sifre = sifre_girilen.getText();
-        if ("root".equals(varsayılanKullaniciAdi) && "root".equals(varsayılanSifre)) {
+        if ("root".equals(admin_kullanici_adi) && "root".equals(admin_sifre)) {
             //varsayılan kullanıcı bilgileri girildiyse butonkontrol metodu çalışacak.
+            JOptionPane.showMessageDialog(null, "Giriş Başarılı! " + admin_kullanici_adi + " Sisteme giriş yaptı.");
             butonKontrol();
         }
         try {
@@ -68,11 +67,12 @@ public class admin_giris extends javax.swing.JFrame {
             st.setString(2, admin_sifre);
             ResultSet rs = st.executeQuery();
             if (rs.next()) {
-                JOptionPane.showMessageDialog(null, "Giriş Başarılı! " + admin_kullanici_adi + "Sisteme giriş yaptı.");
+                JOptionPane.showMessageDialog(null, "Giriş Başarılı! " + admin_kullanici_adi + " Sisteme giriş yaptı.");
+                butonKontrol();
             } else {
                 kullanici_adi_girilen.setText("");
                 sifre_girilen.setText("");
-                if (!"root".equals(varsayılanKullaniciAdi) && !"root".equals(varsayılanSifre)) {
+                if (!"root".equals(admin_kullanici_adi) && !"root".equals(admin_sifre)) {
                     JOptionPane.showMessageDialog(null, "Kullanıcı adı veya şifre hatalı.");
                 }
 
