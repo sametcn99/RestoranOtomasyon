@@ -42,63 +42,25 @@ public class admin_panel extends javax.swing.JFrame {
     static String k_adi;
     static String k_sifre;
     static String queryHasilat;
+    static String uid = "";
+    static String uadi = "";
+    static String ufiyati = "";
+    static int toplamTutar = 0;
+    static String tutar = "";
+    /*static int toplamTutar = 0;
+    static int tutar = 0;*/
 
     /**
      * Creates new form admin_panel
      */
-    public admin_panel() throws SQLException {
+    public admin_panel() {
         initComponents();
-        urunGoster();
-        yoneticiGoster();
-        display_masalar();
-    }
-
-    //Burada database'den ürünler çekilip tabloya yazdırıldı.
-    public static void urunGoster() throws SQLException {
-        final String QUERY = "Select urun_id, urun_adi, urun_fiyati from urunler";
-        con = DriverManager.getConnection(fullurl);
-        System.out.println("Bağlantı Kuruldu");
-        java.sql.Statement stmt = con.createStatement();
-        DefaultTableModel model = (DefaultTableModel) display_urunler2.getModel();
-        ResultSet rs = stmt.executeQuery(QUERY);
-        int i = 0;
-        while (rs.next()) {
-            uid = rs.getString("urun_id");
-            uadi = rs.getString("urun_adi");
-            ufiyati = rs.getString("urun_fiyati");
-            model.addRow(new Object[]{uid, uadi, ufiyati});
-            i++;
-        }
-    }
-
-    //databasedeki masalar çekilerek tabloya yazdırıldı.
-    public static void display_masalar() throws SQLException {
-        final String QUERY = "Select * from masa";
-        con = DriverManager.getConnection(fullurl);
-        java.sql.Statement stmt = con.createStatement();
-        ResultSet rs = stmt.executeQuery(QUERY);
-        DefaultTableModel model2 = (DefaultTableModel) masalar_display.getModel();
-        String masalar = null;
-        while (rs.next()) {
-            masalar = rs.getString("masa");
-            model2.addRow(new Object[]{masalar});
-        }
-    }
-
-    //databasedeki yöneticiler tabloya yazdırıldı.
-    public static void yoneticiGoster() throws SQLException {
-                DefaultTableModel model = (DefaultTableModel) yonetici_table.getModel();
-        final String QUERY = "Select admin_kullanici_adi, admin_sifre from adminler";
-        con = DriverManager.getConnection(fullurl);
-        System.out.println("Bağlantı Kuruldu");
-        java.sql.Statement stmt = con.createStatement();
-        ResultSet rs = stmt.executeQuery(QUERY);
-        int i = 0;
-        while (rs.next()) {
-            k_adi = rs.getString("admin_kullanici_adi");
-            k_sifre = rs.getString("admin_sifre");
-            model.addRow(new Object[]{k_adi, k_sifre});
-            i++;
+        try {
+            urunGoster();
+            yoneticiGoster();
+            display_masalar();
+        } catch (SQLException ex) {
+            Logger.getLogger(admin_panel.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -121,13 +83,13 @@ public class admin_panel extends javax.swing.JFrame {
         ürün_cikar = new javax.swing.JButton();
         ürün_id_cikar = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        display_urunler2 = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         jLabel18 = new javax.swing.JLabel();
         jLabel19 = new javax.swing.JLabel();
         jLabel20 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        display_urunler = new javax.swing.JTable();
         Yoneticiler_Panel = new javax.swing.JPanel();
         sifre_girilen = new javax.swing.JPasswordField();
         jLabel2 = new javax.swing.JLabel();
@@ -142,6 +104,18 @@ public class admin_panel extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         yonetici_table = new javax.swing.JTable();
         jLabel7 = new javax.swing.JLabel();
+        Masalar_Panel = new javax.swing.JPanel();
+        jLabel12 = new javax.swing.JLabel();
+        masa_adi_gir = new javax.swing.JTextField();
+        masa_ekle = new javax.swing.JButton();
+        masa_cikar_adi_input = new javax.swing.JTextField();
+        masa_cikar = new javax.swing.JButton();
+        jLabel13 = new javax.swing.JLabel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        masalar_display = new javax.swing.JTable();
+        jLabel16 = new javax.swing.JLabel();
+        jLabel17 = new javax.swing.JLabel();
+        jLabel21 = new javax.swing.JLabel();
         Hasilat_Raporlari = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         gunSecBas = new javax.swing.JComboBox<>();
@@ -156,18 +130,8 @@ public class admin_panel extends javax.swing.JFrame {
         hasilatRaporuTable = new javax.swing.JScrollPane();
         raporTablo = new javax.swing.JTable();
         jLabel22 = new javax.swing.JLabel();
-        Masalar_Panel = new javax.swing.JPanel();
-        jLabel12 = new javax.swing.JLabel();
-        masa_adi_gir = new javax.swing.JTextField();
-        masa_ekle = new javax.swing.JButton();
-        masa_cikar_adi_input = new javax.swing.JTextField();
-        masa_cikar = new javax.swing.JButton();
-        jLabel13 = new javax.swing.JLabel();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        masalar_display = new javax.swing.JTable();
-        jLabel16 = new javax.swing.JLabel();
-        jLabel17 = new javax.swing.JLabel();
-        jLabel21 = new javax.swing.JLabel();
+        jLabel23 = new javax.swing.JLabel();
+        toplamTutarGoster = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setBackground(new java.awt.Color(51, 51, 51));
@@ -220,19 +184,6 @@ public class admin_panel extends javax.swing.JFrame {
         jLabel11.setForeground(new java.awt.Color(204, 204, 204));
         jLabel11.setText("Ürün Çıkar");
 
-        display_urunler2.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "id", "ad", "fiyat"
-            }
-        ));
-        display_urunler2.setMaximumSize(new java.awt.Dimension(0, 0));
-        display_urunler2.setMinimumSize(new java.awt.Dimension(0, 0));
-        display_urunler2.setPreferredSize(new java.awt.Dimension(0, 0));
-        jScrollPane2.setViewportView(display_urunler2);
-
         jLabel1.setForeground(new java.awt.Color(204, 204, 204));
         jLabel1.setText("Ürün ID: ");
 
@@ -249,6 +200,16 @@ public class admin_panel extends javax.swing.JFrame {
         jLabel9.setForeground(new java.awt.Color(204, 204, 204));
         jLabel9.setText("Kayıtlı Ürünler");
 
+        display_urunler.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "urun_id", "urun_adi", "urun_fiyati"
+            }
+        ));
+        jScrollPane4.setViewportView(display_urunler);
+
         javax.swing.GroupLayout Urunler_PanelLayout = new javax.swing.GroupLayout(Urunler_Panel);
         Urunler_Panel.setLayout(Urunler_PanelLayout);
         Urunler_PanelLayout.setHorizontalGroup(
@@ -256,31 +217,27 @@ public class admin_panel extends javax.swing.JFrame {
             .addGroup(Urunler_PanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(Urunler_PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel8)
                     .addGroup(Urunler_PanelLayout.createSequentialGroup()
                         .addGroup(Urunler_PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel18)
                             .addComponent(jLabel19)
-                            .addComponent(jLabel20))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 68, Short.MAX_VALUE)
-                        .addGroup(Urunler_PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(urun_ekle_button)
-                            .addGroup(Urunler_PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(urunEkle_adi, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(urunEkle_id, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(urunEkle_fiyati, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(ürün_id_cikar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(ürün_cikar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(367, 367, 367))
-                    .addGroup(Urunler_PanelLayout.createSequentialGroup()
-                        .addGroup(Urunler_PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel11)
-                            .addComponent(jLabel8))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(Urunler_PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel9)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(32, 32, 32))))
+                            .addComponent(jLabel20))
+                        .addGap(18, 18, 18)
+                        .addGroup(Urunler_PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(urunEkle_id)
+                            .addComponent(urunEkle_fiyati)
+                            .addComponent(urunEkle_adi)
+                            .addComponent(urun_ekle_button, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(ürün_id_cikar)
+                            .addComponent(ürün_cikar, javax.swing.GroupLayout.DEFAULT_SIZE, 103, Short.MAX_VALUE))))
+                .addGap(47, 47, 47)
+                .addGroup(Urunler_PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 276, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel9))
+                .addContainerGap(82, Short.MAX_VALUE))
         );
         Urunler_PanelLayout.setVerticalGroup(
             Urunler_PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -289,8 +246,8 @@ public class admin_panel extends javax.swing.JFrame {
                 .addGroup(Urunler_PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
                     .addComponent(jLabel9))
-                .addGap(8, 8, 8)
-                .addGroup(Urunler_PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGap(11, 11, 11)
+                .addGroup(Urunler_PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(Urunler_PanelLayout.createSequentialGroup()
                         .addGroup(Urunler_PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(urunEkle_id, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -299,22 +256,22 @@ public class admin_panel extends javax.swing.JFrame {
                         .addGroup(Urunler_PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(urunEkle_adi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel18))
-                        .addGap(11, 11, 11)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(Urunler_PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(urunEkle_fiyati, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel19))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(urun_ekle_button)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(urun_ekle_button)
+                        .addGap(33, 33, 33)
                         .addComponent(jLabel11)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(Urunler_PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(ürün_id_cikar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel20))
+                        .addGroup(Urunler_PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel20)
+                            .addComponent(ürün_id_cikar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(ürün_cikar))
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                .addContainerGap(81, Short.MAX_VALUE))
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(85, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Ürünler", Urunler_Panel);
@@ -420,7 +377,7 @@ public class admin_panel extends javax.swing.JFrame {
                     .addGroup(Yoneticiler_PanelLayout.createSequentialGroup()
                         .addComponent(jLabel7)
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 373, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 367, Short.MAX_VALUE))
                 .addContainerGap())
         );
         Yoneticiler_PanelLayout.setVerticalGroup(
@@ -452,132 +409,10 @@ public class admin_panel extends javax.swing.JFrame {
                         .addComponent(jLabel7)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
-                .addContainerGap(96, Short.MAX_VALUE))
+                .addContainerGap(125, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Yöneticiler", Yoneticiler_Panel);
-
-        Hasilat_Raporlari.setBackground(new java.awt.Color(51, 51, 51));
-        Hasilat_Raporlari.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-
-        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(204, 204, 204));
-        jLabel5.setText("Hasılat Raporu Çıkar");
-
-        gunSecBas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31" }));
-        gunSecBas.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                gunSecBasMouseClicked(evt);
-            }
-        });
-        gunSecBas.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                gunSecBasActionPerformed(evt);
-            }
-        });
-
-        aySecBas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12" }));
-
-        yilSecBas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "2021", "2020", "2019", "2018", "2017" }));
-
-        yilSecSon.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "2021", "2020", "2019", "2018", "2017" }));
-
-        aySecSon.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12" }));
-
-        gunSecSon.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31" }));
-
-        jLabel14.setFont(new java.awt.Font("Tahoma", 2, 11)); // NOI18N
-        jLabel14.setForeground(new java.awt.Color(204, 204, 204));
-        jLabel14.setText("Başlangıç Tarihi (Gün-Ay-Yıl)");
-
-        jLabel15.setFont(new java.awt.Font("Tahoma", 2, 11)); // NOI18N
-        jLabel15.setForeground(new java.awt.Color(204, 204, 204));
-        jLabel15.setText("Bitiş Tarihi (Gün-Ay-Yıl)");
-
-        raporGoruntule.setText("Raporu Göster");
-        raporGoruntule.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                raporGoruntuleMouseClicked(evt);
-            }
-        });
-
-        raporTablo.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "Sipariş ID", "Tarih", "Tutar"
-            }
-        ));
-        hasilatRaporuTable.setViewportView(raporTablo);
-
-        jLabel22.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jLabel22.setForeground(new java.awt.Color(204, 204, 204));
-        jLabel22.setText("Hasılat Raporu");
-
-        javax.swing.GroupLayout Hasilat_RaporlariLayout = new javax.swing.GroupLayout(Hasilat_Raporlari);
-        Hasilat_Raporlari.setLayout(Hasilat_RaporlariLayout);
-        Hasilat_RaporlariLayout.setHorizontalGroup(
-            Hasilat_RaporlariLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(Hasilat_RaporlariLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(Hasilat_RaporlariLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel14)
-                    .addGroup(Hasilat_RaporlariLayout.createSequentialGroup()
-                        .addComponent(gunSecBas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(aySecBas, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(yilSecBas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(raporGoruntule)
-                    .addGroup(Hasilat_RaporlariLayout.createSequentialGroup()
-                        .addComponent(gunSecSon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(aySecSon, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(yilSecSon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jLabel15)
-                    .addComponent(jLabel5))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
-                .addGroup(Hasilat_RaporlariLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(hasilatRaporuTable, javax.swing.GroupLayout.PREFERRED_SIZE, 405, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel22))
-                .addContainerGap())
-        );
-        Hasilat_RaporlariLayout.setVerticalGroup(
-            Hasilat_RaporlariLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(Hasilat_RaporlariLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(Hasilat_RaporlariLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel5)
-                    .addComponent(jLabel22, javax.swing.GroupLayout.Alignment.TRAILING))
-                .addGroup(Hasilat_RaporlariLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(Hasilat_RaporlariLayout.createSequentialGroup()
-                        .addGap(22, 22, 22)
-                        .addComponent(jLabel14)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(Hasilat_RaporlariLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(gunSecBas, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Hasilat_RaporlariLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(aySecBas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(yilSecBas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel15)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(Hasilat_RaporlariLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(gunSecSon, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Hasilat_RaporlariLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(yilSecSon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(aySecSon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(18, 18, 18)
-                        .addComponent(raporGoruntule))
-                    .addGroup(Hasilat_RaporlariLayout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addComponent(hasilatRaporuTable, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(0, 70, Short.MAX_VALUE))
-        );
-
-        jTabbedPane1.addTab("Hasılat Raporu", Hasilat_Raporlari);
 
         Masalar_Panel.setBackground(new java.awt.Color(51, 51, 51));
         Masalar_Panel.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -673,7 +508,7 @@ public class admin_panel extends javax.swing.JFrame {
                             .addComponent(masa_cikar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(18, 18, 18)
                 .addGroup(Masalar_PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 383, Short.MAX_VALUE)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 377, Short.MAX_VALUE)
                     .addGroup(Masalar_PanelLayout.createSequentialGroup()
                         .addComponent(jLabel21)
                         .addGap(0, 0, Short.MAX_VALUE)))
@@ -703,10 +538,147 @@ public class admin_panel extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(masa_cikar))
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(109, Short.MAX_VALUE))
+                .addContainerGap(138, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Masalar", Masalar_Panel);
+
+        Hasilat_Raporlari.setBackground(new java.awt.Color(51, 51, 51));
+        Hasilat_Raporlari.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel5.setText("Hasılat Raporu Çıkar");
+
+        gunSecBas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31" }));
+        gunSecBas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                gunSecBasMouseClicked(evt);
+            }
+        });
+        gunSecBas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                gunSecBasActionPerformed(evt);
+            }
+        });
+
+        aySecBas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12" }));
+
+        yilSecBas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "2021", "2020", "2019", "2018", "2017" }));
+
+        yilSecSon.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "2021", "2020", "2019", "2018", "2017" }));
+
+        aySecSon.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12" }));
+
+        gunSecSon.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31" }));
+
+        jLabel14.setFont(new java.awt.Font("Tahoma", 2, 11)); // NOI18N
+        jLabel14.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel14.setText("Başlangıç Tarihi (Gün-Ay-Yıl)");
+
+        jLabel15.setFont(new java.awt.Font("Tahoma", 2, 11)); // NOI18N
+        jLabel15.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel15.setText("Bitiş Tarihi (Gün-Ay-Yıl)");
+
+        raporGoruntule.setText("Raporu Göster");
+        raporGoruntule.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                raporGoruntuleMouseClicked(evt);
+            }
+        });
+
+        raporTablo.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Sipariş ID", "Tarih", "Tutar"
+            }
+        ));
+        hasilatRaporuTable.setViewportView(raporTablo);
+
+        jLabel22.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel22.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel22.setText("Hasılat Raporu");
+
+        jLabel23.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel23.setText("Toplam Tutar:");
+
+        javax.swing.GroupLayout Hasilat_RaporlariLayout = new javax.swing.GroupLayout(Hasilat_Raporlari);
+        Hasilat_Raporlari.setLayout(Hasilat_RaporlariLayout);
+        Hasilat_RaporlariLayout.setHorizontalGroup(
+            Hasilat_RaporlariLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(Hasilat_RaporlariLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(Hasilat_RaporlariLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(Hasilat_RaporlariLayout.createSequentialGroup()
+                        .addGroup(Hasilat_RaporlariLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel14)
+                            .addGroup(Hasilat_RaporlariLayout.createSequentialGroup()
+                                .addComponent(gunSecBas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(aySecBas, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(yilSecBas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(raporGoruntule)
+                            .addGroup(Hasilat_RaporlariLayout.createSequentialGroup()
+                                .addComponent(gunSecSon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(aySecSon, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(yilSecSon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel15)
+                            .addComponent(jLabel5))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
+                        .addGroup(Hasilat_RaporlariLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(hasilatRaporuTable, javax.swing.GroupLayout.PREFERRED_SIZE, 405, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel22)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Hasilat_RaporlariLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jLabel23)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(toplamTutarGoster, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
+        );
+        Hasilat_RaporlariLayout.setVerticalGroup(
+            Hasilat_RaporlariLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(Hasilat_RaporlariLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(Hasilat_RaporlariLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel23)
+                    .addGroup(Hasilat_RaporlariLayout.createSequentialGroup()
+                        .addGroup(Hasilat_RaporlariLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel22, javax.swing.GroupLayout.Alignment.TRAILING))
+                        .addGroup(Hasilat_RaporlariLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(Hasilat_RaporlariLayout.createSequentialGroup()
+                                .addGap(22, 22, 22)
+                                .addComponent(jLabel14)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(Hasilat_RaporlariLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(gunSecBas, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Hasilat_RaporlariLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(aySecBas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(yilSecBas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel15)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(Hasilat_RaporlariLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(gunSecSon, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Hasilat_RaporlariLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(yilSecSon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(aySecSon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(18, 18, 18)
+                                .addComponent(raporGoruntule))
+                            .addGroup(Hasilat_RaporlariLayout.createSequentialGroup()
+                                .addGap(10, 10, 10)
+                                .addComponent(hasilatRaporuTable, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(toplamTutarGoster, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(0, 68, Short.MAX_VALUE))
+        );
+
+        jTabbedPane1.addTab("Hasılat Raporu", Hasilat_Raporlari);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -782,7 +754,7 @@ public class admin_panel extends javax.swing.JFrame {
             con = DriverManager.getConnection(fullurl);
             java.sql.Statement stmt = con.createStatement();
             ((Connection) con).createStatement().execute(query);
-            DefaultTableModel model = (DefaultTableModel) display_urunler2.getModel();
+            DefaultTableModel model = (DefaultTableModel) display_urunler.getModel();
             model.setRowCount(0);
             urunGoster();
             urunEkle_id.setText("");
@@ -803,7 +775,7 @@ public class admin_panel extends javax.swing.JFrame {
             id = ürün_id_cikar.getText();
             String query = "delete from urunler where urun_id='" + id + "'";
             ((Connection) con).createStatement().execute(query);
-            DefaultTableModel model = (DefaultTableModel) display_urunler2.getModel();
+            DefaultTableModel model = (DefaultTableModel) display_urunler.getModel();
             model.setRowCount(0);
             urunGoster();
             ürün_id_cikar.setText("");
@@ -898,6 +870,7 @@ public class admin_panel extends javax.swing.JFrame {
             //hasilat_raporu.show();
             //hasilatRapru.setVisible(true);
             raporGoster();
+            toplamTutarHesapla();
         } catch (SQLException ex) {
             Logger.getLogger(admin_panel.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -923,6 +896,69 @@ public class admin_panel extends javax.swing.JFrame {
             model.addRow(new Object[]{sid, tarih, tutar});
             i++;
         }
+    }
+
+    //Burada database'den ürünler çekilip tabloya yazdırıldı.
+    void urunGoster() throws SQLException {
+        final String QUERY = "Select urun_id, urun_adi, urun_fiyati from urunler";
+        con = DriverManager.getConnection(fullurl);
+        System.out.println("Bağlantı Kuruldu");
+        java.sql.Statement stmt = con.createStatement();
+        DefaultTableModel model = (DefaultTableModel) display_urunler.getModel();
+        ResultSet rs = stmt.executeQuery(QUERY);
+        int i = 0;
+        while (rs.next()) {
+            uid = rs.getString("urun_id");
+            uadi = rs.getString("urun_adi");
+            ufiyati = rs.getString("urun_fiyati");
+            model.addRow(new Object[]{uid, uadi, ufiyati});
+            i++;
+        }
+    }
+
+    //databasedeki masalar çekilerek tabloya yazdırıldı.
+    public static void display_masalar() throws SQLException {
+        final String QUERY = "Select * from masa";
+        con = DriverManager.getConnection(fullurl);
+        java.sql.Statement stmt = con.createStatement();
+        ResultSet rs = stmt.executeQuery(QUERY);
+        DefaultTableModel model2 = (DefaultTableModel) masalar_display.getModel();
+        String masalar = null;
+        while (rs.next()) {
+            masalar = rs.getString("masa");
+            model2.addRow(new Object[]{masalar});
+        }
+    }
+
+    //databasedeki yöneticiler tabloya yazdırıldı.
+    public static void yoneticiGoster() throws SQLException {
+        DefaultTableModel model = (DefaultTableModel) yonetici_table.getModel();
+        final String QUERY = "Select admin_kullanici_adi, admin_sifre from adminler";
+        con = DriverManager.getConnection(fullurl);
+        System.out.println("Bağlantı Kuruldu");
+        java.sql.Statement stmt = con.createStatement();
+        ResultSet rs = stmt.executeQuery(QUERY);
+        int i = 0;
+        while (rs.next()) {
+            k_adi = rs.getString("admin_kullanici_adi");
+            k_sifre = rs.getString("admin_sifre");
+            model.addRow(new Object[]{k_adi, k_sifre});
+            i++;
+        }
+    }
+
+    static void toplamTutarHesapla() {
+        DefaultTableModel model = (DefaultTableModel) raporTablo.getModel();
+        int satirSayisi = model.getRowCount();
+        System.out.println("toplam tutar hesapla: Toplam Tutar: " + toplamTutar + "toplam tutar2: " + String.valueOf(toplamTutar) + "satır sayısı " + satirSayisi);
+        System.out.println("model get value: " + model.getValueAt(1, 2));
+        for (int i = 0; i < satirSayisi; i++) {
+            tutar =  (String) model.getValueAt(i, 2);
+            toplamTutar = toplamTutar + Integer.parseInt(tutar);
+        }
+        toplamTutarGoster.setText(String.valueOf(toplamTutar));
+        
+        System.out.println("toplam tutar hesapla: Toplam Tutar: " + toplamTutar + "toplam tutar2: " + String.valueOf(toplamTutar) + "satır sayısı " + satirSayisi);
     }
 
     /**
@@ -952,17 +988,16 @@ public class admin_panel extends javax.swing.JFrame {
         }
         //</editor-fold>
         new admin_panel().setVisible(true);
-
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     static javax.swing.JPanel Hasilat_Raporlari;
     private javax.swing.JPanel Masalar_Panel;
-    private javax.swing.JPanel Urunler_Panel;
+    private static javax.swing.JPanel Urunler_Panel;
     private javax.swing.JPanel Yoneticiler_Panel;
     private static javax.swing.JComboBox<String> aySecBas;
     private static javax.swing.JComboBox<String> aySecSon;
-    private static javax.swing.JTable display_urunler2;
+    private static javax.swing.JTable display_urunler;
     private static javax.swing.JComboBox<String> gunSecBas;
     private static javax.swing.JComboBox<String> gunSecSon;
     private javax.swing.JScrollPane hasilatRaporuTable;
@@ -981,6 +1016,7 @@ public class admin_panel extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
+    private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -989,8 +1025,8 @@ public class admin_panel extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTextField kullanici_adi_girilen;
     private javax.swing.JTextField kullanici_adi_girilen1;
@@ -1002,6 +1038,7 @@ public class admin_panel extends javax.swing.JFrame {
     private javax.swing.JButton raporGoruntule;
     private static javax.swing.JTable raporTablo;
     private javax.swing.JPasswordField sifre_girilen;
+    private static javax.swing.JTextField toplamTutarGoster;
     private javax.swing.JTextField urunEkle_adi;
     private javax.swing.JTextField urunEkle_fiyati;
     private javax.swing.JTextField urunEkle_id;

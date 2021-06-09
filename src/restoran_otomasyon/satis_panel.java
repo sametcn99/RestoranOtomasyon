@@ -33,7 +33,7 @@ public class satis_panel extends javax.swing.JFrame {
     static String uid = "";
     static String uadi = "";
     static String ufiyati = "";
-    static String secilenMasa;
+    static String secilenMasa = "";
     static Date currentDate = new Date();
     static String tutar;
     static int toplamtutar = 0;
@@ -454,7 +454,7 @@ public class satis_panel extends javax.swing.JFrame {
                 .addContainerGap(113, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("Rezervasyon Ekle", jPanel1);
+        jTabbedPane1.addTab("Rezervasyon Panel", jPanel1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -579,7 +579,6 @@ public class satis_panel extends javax.swing.JFrame {
             model.addRow(new Object[]{adSoyad, Tarih, Masa});
             i++;
         }
-        
     }
 
     void urunGoster() throws SQLException {
@@ -599,27 +598,30 @@ public class satis_panel extends javax.swing.JFrame {
         }
     }
 
-    void siparisTamamla() throws SQLException {
-        DefaultTableModel model2 = (DefaultTableModel) eklenen_urunler.getModel();
-        DefaultTableModel model3 = (DefaultTableModel) jTable1.getModel();
-        DefaultComboBoxModel comboboxModel = (DefaultComboBoxModel) combobox.getModel();
-        siparisID = UUID.randomUUID().toString();
-        secilenMasa = (String) comboboxModel.getSelectedItem();
-        int rows = eklenen_urunler.getRowCount();
-        int i = 0;
-        while (i != rows) {
-            tutar = (String) model2.getValueAt(i, 2);
-            toplamtutar = Integer.parseInt(tutar) + toplamtutar;
-            System.out.println("tutar:  " + tutar);
-            i = i + 1;
+
+        void siparisTamamla() throws SQLException {
+            DefaultTableModel model2 = (DefaultTableModel) eklenen_urunler.getModel();
+            DefaultTableModel model3 = (DefaultTableModel) jTable1.getModel();
+            DefaultComboBoxModel comboboxModel = (DefaultComboBoxModel) combobox.getModel();
+            siparisID = UUID.randomUUID().toString();
+            secilenMasa = (String) comboboxModel.getSelectedItem();
+            int rows = eklenen_urunler.getRowCount();
+            int i = 0;
+            while (i != rows) {
+                tutar = (String) model2.getValueAt(i, 2);
+                toplamtutar = Integer.parseInt(tutar) + toplamtutar;
+                System.out.println("tutar:  " + tutar);
+                i = i + 1;
+            }
+            SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd");//dd/MM/yyyy dd.MM.yyyy
+            Date now = new Date();
+            String strDate = sdfDate.format(now);
+            model3.addRow(new Object[]{siparisID, strDate, toplamtutar, secilenMasa});
+            model2.setRowCount(0);
+            tamamlananSiparisKaydi();
         }
-        SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd");//dd/MM/yyyy dd.MM.yyyy
-        Date now = new Date();
-        String strDate = sdfDate.format(now);
-        model3.addRow(new Object[]{siparisID, strDate, toplamtutar, secilenMasa});
-        model2.setRowCount(0);
-        tamamlananSiparisKaydi();
-    }
+
+    
 
     public static void tamamlananSiparisKaydi() throws SQLException {
         SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd");//dd/MM/yyyy dd.MM.yyyy
@@ -655,11 +657,11 @@ public class satis_panel extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private static javax.swing.JPanel UrunlerPanel;
-    private javax.swing.JComboBox<String> aySecBasRezervasyon;
-    private javax.swing.JComboBox<String> combobox;
-    private javax.swing.JTable display_urunler;
-    private javax.swing.JTable eklenen_urunler;
-    private javax.swing.JComboBox<String> gunSecBasRezervasyon;
+    private static javax.swing.JComboBox<String> aySecBasRezervasyon;
+    private static javax.swing.JComboBox<String> combobox;
+    private static javax.swing.JTable display_urunler;
+    private static javax.swing.JTable eklenen_urunler;
+    private static javax.swing.JComboBox<String> gunSecBasRezervasyon;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -679,19 +681,19 @@ public class satis_panel extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JScrollPane jScrollPane8;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTable jTable1;
+    private static javax.swing.JTable jTable1;
     private javax.swing.JPanel masalarPanel;
-    private javax.swing.JTable masalar_bos;
-    private javax.swing.JTable masalar_dolu;
+    public static javax.swing.JTable masalar_bos;
+    public static javax.swing.JTable masalar_dolu;
     private javax.swing.JButton rezervasyonCikar;
     private javax.swing.JTextPane rezervasyonCikarAdSoyad;
     private javax.swing.JTextPane rezervasyonEkleAdSoyad;
     private javax.swing.JButton rezervasyonEkleButon;
-    private javax.swing.JComboBox<String> rezervasyonMasa;
-    private javax.swing.JTable rezervasyonTablo;
+    private static javax.swing.JComboBox<String> rezervasyonMasa;
+    private static javax.swing.JTable rezervasyonTablo;
     private javax.swing.JPanel siparisEkranPanel;
     private javax.swing.JButton siparis_tamamla_button;
     private javax.swing.JPanel tamamlananSiparisPanel;
-    private javax.swing.JComboBox<String> yilSecBasRezervasyon;
+    private static javax.swing.JComboBox<String> yilSecBasRezervasyon;
     // End of variables declaration//GEN-END:variables
 }
