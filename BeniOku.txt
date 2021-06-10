@@ -11,4 +11,4 @@ Database = gorsel3
 User = sa
 Password = 1
 //
-Proje Github Linki: github.com/sametcn99/RestoranOtomasyon
+static String fullurl = "jdbc:sqlserver://localhost:1433;databasename=gorsel3;user=sa;password=1";
