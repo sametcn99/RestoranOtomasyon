@@ -1,0 +1,5 @@
+adisyon paneli: 
+*her masa için ayrı sipariş ekranı açılacak.
+*açılan sipariş ekranlarında sipariş tamamla butonuna basılana kadar ya da sipariş iptal edilene kadar siparişler kayıtlı kalacak.
+*adisyon açılma süresi ve kapatma süresi kayıt edilecek.
+*müşterinin masada oturma süresi kayıt edilecek. kayıt, adisyon açıldığı zaman başlayıp sipariş tamamlanana kadar sürecek.

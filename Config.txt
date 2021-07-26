@@ -1,0 +1,7 @@
+Sunucu = localhost
+Port = 1433
+Database = gorsel3
+User = sa
+Password = 1
+//
+static String fullurl = "jdbc:sqlserver://localhost:1433;databasename=gorsel3;user=sa;password=1";
