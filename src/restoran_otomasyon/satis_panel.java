@@ -85,11 +85,11 @@ public class satis_panel extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         AdisyonPaneli = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
+        jPanel4 = new javax.swing.JPanel();
         jScrollPane10 = new javax.swing.JScrollPane();
         adisyonBosMasalar = new javax.swing.JTable();
         jScrollPane11 = new javax.swing.JScrollPane();
         adisyonDoluMasalar = new javax.swing.JTable();
-        adisyonCombobox = new javax.swing.JComboBox<>();
         UrunlerPanel1 = new javax.swing.JPanel();
         jScrollPane9 = new javax.swing.JScrollPane();
         display_urunler1 = new javax.swing.JTable();
@@ -99,6 +99,7 @@ public class satis_panel extends javax.swing.JFrame {
         jLabel11 = new javax.swing.JLabel();
         siparis_tamamla_button1 = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
+        adisyonCombobox = new javax.swing.JComboBox<>();
         jLabel12 = new javax.swing.JLabel();
         TamamlananSiparislerPaneli = new javax.swing.JPanel();
         tamamlananSiparisPanel = new javax.swing.JPanel();
@@ -128,6 +129,7 @@ public class satis_panel extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(display_urunler);
 
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(204, 204, 204));
         jLabel1.setText("Ürünler");
 
@@ -146,6 +148,7 @@ public class satis_panel extends javax.swing.JFrame {
         });
         jScrollPane2.setViewportView(eklenen_urunler);
 
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(204, 204, 204));
         jLabel2.setText("Eklenen Ürünler");
 
@@ -425,6 +428,9 @@ public class satis_panel extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(51, 51, 51));
 
+        jPanel4.setBackground(new java.awt.Color(51, 51, 51));
+        jPanel4.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
         adisyonBosMasalar.setBackground(java.awt.Color.green);
         adisyonBosMasalar.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -457,41 +463,33 @@ public class satis_panel extends javax.swing.JFrame {
         });
         jScrollPane11.setViewportView(adisyonDoluMasalar);
 
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane10, javax.swing.GroupLayout.DEFAULT_SIZE, 97, Short.MAX_VALUE)
+            .addComponent(jScrollPane11, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addComponent(jScrollPane10, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane11, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane10, javax.swing.GroupLayout.DEFAULT_SIZE, 87, Short.MAX_VALUE)
-                    .addComponent(jScrollPane11, javax.swing.GroupLayout.DEFAULT_SIZE, 87, Short.MAX_VALUE))
-                .addContainerGap())
+                .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jScrollPane10, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(40, 40, 40)
-                .addComponent(jScrollPane11, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
-
-        adisyonCombobox.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                adisyonComboboxMouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                adisyonComboboxMouseEntered(evt);
-            }
-            public void mouseReleased(java.awt.event.MouseEvent evt) {
-                adisyonComboboxMouseReleased(evt);
-            }
-        });
-        adisyonCombobox.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                adisyonComboboxActionPerformed(evt);
-            }
-        });
 
         UrunlerPanel1.setBackground(new java.awt.Color(51, 51, 51));
         UrunlerPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -511,6 +509,7 @@ public class satis_panel extends javax.swing.JFrame {
         });
         jScrollPane9.setViewportView(display_urunler1);
 
+        jLabel10.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(204, 204, 204));
         jLabel10.setText("Ürünler");
 
@@ -529,6 +528,7 @@ public class satis_panel extends javax.swing.JFrame {
         });
         jScrollPane12.setViewportView(eklenen_urunler1);
 
+        jLabel11.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(204, 204, 204));
         jLabel11.setText("Eklenen Ürünler");
 
@@ -546,6 +546,27 @@ public class satis_panel extends javax.swing.JFrame {
             }
         });
 
+        adisyonCombobox.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                adisyonComboboxMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                adisyonComboboxMouseEntered(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                adisyonComboboxMouseReleased(evt);
+            }
+        });
+        adisyonCombobox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                adisyonComboboxActionPerformed(evt);
+            }
+        });
+
+        jLabel12.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel12.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel12.setText("Seçilen Masa");
+
         javax.swing.GroupLayout UrunlerPanel1Layout = new javax.swing.GroupLayout(UrunlerPanel1);
         UrunlerPanel1.setLayout(UrunlerPanel1Layout);
         UrunlerPanel1Layout.setHorizontalGroup(
@@ -553,40 +574,45 @@ public class satis_panel extends javax.swing.JFrame {
             .addGroup(UrunlerPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(UrunlerPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane9, javax.swing.GroupLayout.DEFAULT_SIZE, 650, Short.MAX_VALUE)
-                    .addGroup(UrunlerPanel1Layout.createSequentialGroup()
-                        .addGroup(UrunlerPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel10)
-                            .addComponent(jLabel11))
-                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jScrollPane9, javax.swing.GroupLayout.DEFAULT_SIZE, 735, Short.MAX_VALUE)
                     .addComponent(jScrollPane12)
                     .addGroup(UrunlerPanel1Layout.createSequentialGroup()
+                        .addGroup(UrunlerPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel11)
+                            .addComponent(jLabel10)
+                            .addGroup(UrunlerPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel12)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(adisyonCombobox, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, UrunlerPanel1Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jButton1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(siparis_tamamla_button1, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(siparis_tamamla_button1)))
                 .addContainerGap())
         );
         UrunlerPanel1Layout.setVerticalGroup(
             UrunlerPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(UrunlerPanel1Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(5, 5, 5)
+                .addGroup(UrunlerPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(adisyonCombobox, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel12))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel10)
-                .addGap(2, 2, 2)
-                .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(4, 4, 4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel11)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane12, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane12, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(UrunlerPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(siparis_tamamla_button1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton1))
                 .addContainerGap())
         );
-
-        jLabel12.setForeground(new java.awt.Color(204, 204, 204));
-        jLabel12.setText("Seçilen Masa");
 
         javax.swing.GroupLayout AdisyonPaneliLayout = new javax.swing.GroupLayout(AdisyonPaneli);
         AdisyonPaneli.setLayout(AdisyonPaneliLayout);
@@ -595,14 +621,7 @@ public class satis_panel extends javax.swing.JFrame {
             .addGroup(AdisyonPaneliLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGroup(AdisyonPaneliLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(AdisyonPaneliLayout.createSequentialGroup()
-                        .addGap(2, 2, 2)
-                        .addComponent(adisyonCombobox, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(AdisyonPaneliLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel12)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addComponent(UrunlerPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
@@ -611,17 +630,9 @@ public class satis_panel extends javax.swing.JFrame {
             .addGroup(AdisyonPaneliLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(AdisyonPaneliLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(AdisyonPaneliLayout.createSequentialGroup()
-                        .addComponent(UrunlerPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 2, Short.MAX_VALUE))
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(UrunlerPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
-            .addGroup(AdisyonPaneliLayout.createSequentialGroup()
-                .addGap(15, 15, 15)
-                .addComponent(jLabel12)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(adisyonCombobox, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Adisyon Paneli", AdisyonPaneli);
@@ -639,6 +650,7 @@ public class satis_panel extends javax.swing.JFrame {
         ));
         jScrollPane3.setViewportView(jTable1);
 
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(204, 204, 204));
         jLabel3.setText("Tamamlanan Siparişler");
 
@@ -767,23 +779,19 @@ public class satis_panel extends javax.swing.JFrame {
     private void adisyonBosMasalarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_adisyonBosMasalarMouseClicked
         DefaultTableModel bosMasaModel = (DefaultTableModel) adisyonBosMasalar.getModel();
         DefaultTableModel doluMasaModel = (DefaultTableModel) adisyonDoluMasalar.getModel();
-        DefaultComboBoxModel comboboxModel = (DefaultComboBoxModel) adisyonCombobox.getModel();
         MasaDoluBos = (String) bosMasaModel.getValueAt(adisyonBosMasalar.getSelectedRow(), 0);
         System.out.println("masa seçilen: " + MasaDoluBos);
         doluMasaModel.addRow(new Object[]{MasaDoluBos});
         bosMasaModel.removeRow(adisyonBosMasalar.getSelectedRow());
-        comboboxModel.removeElement(MasaDoluBos);
     }//GEN-LAST:event_adisyonBosMasalarMouseClicked
 
     private void adisyonDoluMasalarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_adisyonDoluMasalarMouseClicked
         DefaultTableModel bosMasaModel = (DefaultTableModel) adisyonBosMasalar.getModel();
         DefaultTableModel doluMasaModel = (DefaultTableModel) adisyonDoluMasalar.getModel();
-        DefaultComboBoxModel comboboxModel = (DefaultComboBoxModel) adisyonCombobox.getModel();
         MasaDoluBos = (String) doluMasaModel.getValueAt(adisyonDoluMasalar.getSelectedRow(), 0);
         System.out.println("masa seçilen: " + MasaDoluBos);
         bosMasaModel.addRow(new Object[]{MasaDoluBos});
         doluMasaModel.removeRow(adisyonDoluMasalar.getSelectedRow());
-        comboboxModel.addElement(MasaDoluBos);
     }//GEN-LAST:event_adisyonDoluMasalarMouseClicked
 
     private void display_urunler1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_display_urunler1MouseClicked
@@ -960,6 +968,10 @@ public class satis_panel extends javax.swing.JFrame {
         }
         System.out.println("restoran_otomasyon.satis_panel.adisyonGuncelle()");
     }
+    
+    void masaKontrol(){
+        
+    }
 
     public static void tamamlananSiparisKaydi() throws SQLException {
         SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd");//dd/MM/yyyy dd.MM.yyyy
@@ -1005,7 +1017,7 @@ public class satis_panel extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> adisyonCombobox;
     public static javax.swing.JTable adisyonDoluMasalar;
     private static javax.swing.JComboBox<String> aySecBasRezervasyon;
-    private javax.swing.JComboBox<String> combobox;
+    private static javax.swing.JComboBox<String> combobox;
     private static javax.swing.JTable display_urunler;
     private static javax.swing.JTable display_urunler1;
     private static javax.swing.JTable eklenen_urunler;
@@ -1028,6 +1040,7 @@ public class satis_panel extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane10;
     private javax.swing.JScrollPane jScrollPane11;
